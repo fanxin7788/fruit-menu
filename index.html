@@ -3,513 +3,315 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>千万别点这家水果铺 · 今日全量库存</title>
+<title>不卖水果的水果铺 - 现货风味大清单</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    background-color: #ffd60a;
-    background-image: radial-gradient(#ffc300 15%, transparent 16%);
-    background-size: 16px 16px;
-    padding: 16px;
-    color: #111;
-  }
-
-  /* 顶部警示条 */
-  .hazard-bar {
-    height: 12px;
-    background: repeating-linear-gradient(
-      -45deg,
-      #000,
-      #000 12px,
-      #ffd60a 12px,
-      #ffd60a 24px
-    );
-    border: 2px solid #000;
-    border-radius: 4px;
-    margin-bottom: 12px;
-  }
-
-  /* 顶部招牌 */
-  .header-card {
-    background: #fff;
-    border: 3px solid #000;
-    border-radius: 12px;
-    padding: 16px 12px;
-    text-align: center;
-    box-shadow: 5px 5px 0px #000;
-    margin-bottom: 16px;
-  }
-  .badge-tag {
-    display: inline-block;
-    background: #e63946;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 900;
-    padding: 3px 10px;
-    border-radius: 20px;
-    border: 2px solid #000;
-    margin-bottom: 6px;
-    letter-spacing: 1px;
-  }
-  .main-title {
-    font-size: 24px;
-    font-weight: 900;
-    color: #000;
-    letter-spacing: 1px;
-    margin-bottom: 4px;
-  }
-  .sub-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: #d90429;
-  }
-
-  /* 操作工具栏 (截屏时自动隐藏) */
-  .toolbar {
+    background-color: #1a1614;
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    padding: 20px 10px;
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  }
+  .btn-bar {
     margin-bottom: 16px;
-    background: #fff;
-    border: 2px solid #000;
-    padding: 10px 12px;
-    border-radius: 8px;
-    box-shadow: 3px 3px 0 #000;
   }
-  .btn {
-    background: #ffd60a;
-    border: 2px solid #000;
-    font-weight: 800;
-    font-size: 13px;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    box-shadow: 2px 2px 0 #000;
-    transition: all 0.1s;
-  }
-  .btn:active {
-    transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0 #000;
-  }
-  .btn-shot {
-    background: #e63946;
+  .export-btn {
+    background: #e76f51;
     color: #fff;
+    font-weight: 800;
+    font-size: 16px;
+    padding: 12px 28px;
+    border: 3px solid #3d2314;
+    border-radius: 30px;
+    box-shadow: 0 4px 0 #3d2314;
+    cursor: pointer;
   }
-  .btn-reset {
-    background: #f1f1f1;
-    color: #333;
+  .export-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #3d2314;
   }
 
-  /* 多列卡片容器 */
-  .menu-grid {
+  /* 9:16 标准海报画布 (1080x1920 等比缩小展示) */
+  #poster-canvas {
+    width: 480px;
+    background-color: #f7eedd;
+    border: 8px solid #3d2314;
+    border-radius: 18px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+    overflow: hidden;
+    position: relative;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+  }
+
+  /* 顶部美式招牌 */
+  .header {
+    background: #e76f51;
+    border-bottom: 6px solid #3d2314;
+    padding: 14px 12px 10px;
+    text-align: center;
+    position: relative;
+  }
+  .header-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 12px;
-    align-items: flex-start;
   }
-  .category-box {
-    background: #fff;
-    border: 2.5px solid #000;
+  .apple-avatar {
+    width: 64px;
+    height: 64px;
+    background: #f7eedd;
+    border: 3px solid #3d2314;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    box-shadow: 2px 2px 0 #3d2314;
+  }
+  .header-titles h1 {
+    font-size: 32px;
+    color: #fff;
+    text-shadow: 3px 3px 0 #3d2314, -2px -2px 0 #3d2314, 2px -2px 0 #3d2314, -2px 2px 0 #3d2314;
+    letter-spacing: 2px;
+    line-height: 1.1;
+  }
+  .header-tag {
+    display: inline-block;
+    background: #e9c46a;
+    color: #3d2314;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    border: 2px solid #3d2314;
+    margin-top: 4px;
+  }
+
+  /* 核心 14 格独立货架区 (双列瀑布流) */
+  .shelf-grid {
+    padding: 10px 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+    background: #fbf5ea;
+  }
+  .model-card {
+    background: #ffffff;
+    border: 2.5px solid #3d2314;
     border-radius: 8px;
-    box-shadow: 4px 4px 0 #000;
-    flex: 1 1 calc(50% - 12px);
-    min-width: 140px;
-    overflow: hidden;
+    box-shadow: 2px 2px 0 #3d2314;
+    padding: 6px 7px 8px;
+    display: flex;
+    flex-direction: column;
   }
-  @media (min-width: 768px) {
-    .category-box {
-      flex: 1 1 calc(25% - 12px);
-      min-width: 160px;
-    }
-  }
-
-  .cat-header {
-    background: #000;
-    color: #ffd60a;
-    font-size: 14px;
+  .model-head {
+    font-size: 11.5px;
     font-weight: 900;
-    padding: 7px 10px;
+    color: #fff;
+    padding: 3px 6px;
+    border-radius: 4px;
+    border: 1.5px solid #3d2314;
     text-align: center;
-    letter-spacing: 0.5px;
-  }
-
-  .item-list {
-    list-style: none;
-    padding: 6px 8px;
-  }
-  .item-row {
+    margin-bottom: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 4px 2px;
-    font-size: 13px;
-    border-bottom: 1px dashed #e5e5e5;
   }
-  .item-row:last-child {
-    border-bottom: none;
+  .tag-c1 { background: #2a9d8f; }
+  .tag-c2 { background: #e76f51; }
+  .tag-c3 { background: #f4a261; }
+  .tag-c4 { background: #457b9d; }
+  .tag-c5 { background: #e9c46a; color: #3d2314 !important; }
+
+  .flavor-box {
+    font-size: 10.5px;
+    line-height: 1.55;
+    color: #2b2b2b;
+    font-weight: 600;
+    word-break: break-all;
   }
-  .item-left {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    flex: 1;
-    overflow: hidden;
-  }
-  .del-btn {
+  .flavor-box span {
     display: inline-block;
-    color: #e63946;
-    font-size: 14px;
-    cursor: pointer;
-    font-weight: bold;
-    padding: 0 4px;
-    user-select: none;
-  }
-  .item-name {
-    font-weight: 700;
-    color: #222;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  }
+  .flavor-box span::after {
+    content: "·";
+    color: #b5a499;
+    margin: 0 2px;
+  }
+  .flavor-box span:last-child::after {
+    content: "";
   }
 
-  /* 状态按钮 */
-  .status-badge {
-    cursor: pointer;
-    user-select: none;
-    font-weight: 900;
-    font-size: 12px;
-    padding: 1px 6px;
-    border-radius: 4px;
-    border: 1.5px solid #000;
-    margin-left: 6px;
-  }
-  .status-has {
-    background: #e63946;
-    color: #fff;
-  }
-  .status-none {
-    background: #e0e0e0;
-    color: #888;
-    border-color: #888;
-    text-decoration: line-through;
-  }
-
-  /* 添加新口味输入栏 */
-  .add-item-box {
-    display: flex;
-    gap: 4px;
-    padding: 6px 8px;
-    background: #fff8d6;
-    border-top: 1.5px solid #000;
-  }
-  .add-input {
-    flex: 1;
-    border: 1.5px solid #000;
-    border-radius: 4px;
-    padding: 3px 6px;
-    font-size: 12px;
-    outline: none;
-  }
-  .add-btn {
-    background: #000;
-    color: #ffd60a;
-    border: none;
-    font-weight: bold;
-    font-size: 12px;
-    padding: 3px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  /* 底部提示 */
-  .footer-card {
-    margin-top: 16px;
-    background: #fff;
-    border: 3px solid #000;
-    border-radius: 10px;
-    padding: 12px;
+  /* 底部背书区 */
+  .footer {
+    background: #3d2314;
+    color: #f4a261;
+    padding: 10px 8px;
     text-align: center;
+    border-top: 4px solid #2a9d8f;
+  }
+  .footer-trust {
+    font-size: 12px;
     font-weight: 800;
-    font-size: 13px;
-    box-shadow: 4px 4px 0 #000;
-  }
-
-  /* 截屏模式隐藏操作控件 */
-  body.screenshot-mode .toolbar,
-  body.screenshot-mode .del-btn,
-  body.screenshot-mode .add-item-box {
-    display: none !important;
-  }
-  body.screenshot-mode {
-    padding: 8px;
+    letter-spacing: 0.5px;
   }
 </style>
 </head>
 <body>
 
-<div class="hazard-bar"></div>
-
-<div class="header-card">
-  <div class="badge-tag">⚠️ 每日现货清点</div>
-  <div class="main-title">千万别点这家水果铺</div>
-  <div class="sub-title">（各种口味都齐全，专治各种挑食和嘴刁）</div>
+<div class="btn-bar">
+  <button class="export-btn" onclick="takeSnapshot()">📸 点击直接保存高清海报</button>
 </div>
 
-<!-- 工具栏：截长图、编辑控制 -->
-<div class="toolbar" id="toolbar">
-  <button class="btn btn-shot" onclick="toggleScreenshotMode()">📸 朋友圈截长图模式</button>
-  <button class="btn" onclick="toggleEditIcons()">✏️ 显示/隐藏删除图标</button>
-  <button class="btn btn-reset" onclick="resetToDefault()">🔄 恢复默认菜单</button>
-</div>
-
-<!-- 分类多列展示区 -->
-<div class="menu-grid" id="menuGrid"></div>
-
-<div class="footer-card">
-  💬 看中直接圈出截图发我 ｜ 坏果包赔 · 不甜包换
-</div>
-
-<div class="hazard-bar" style="margin-top: 16px; margin-bottom: 0;"></div>
-
-<script>
-// 默认初始数据（完全对照你的原图）
-const defaultData = [
-  {
-    category: "雪茄鸭嘴兽",
-    items: [
-      { name: "青提", has: true }, { name: "白雾红尘", has: true }, { name: "西柚百香果", has: true },
-      { name: "茉莉龙井", has: true }, { name: "西瓜", has: true }, { name: "水mitao", has: true },
-      { name: "杨枝甘露", has: true }, { name: "洛神花cha", has: true }, { name: "矿泉水", has: true },
-      { name: "蜂蜜柚子", has: true }, { name: "冰爽青柠", has: true }, { name: "红苹果", has: true },
-      { name: "手打柠檬茶", has: true }, { name: "紫晶葡萄", has: true }
-    ]
-  },
-  {
-    category: "雪茄大板砖",
-    items: [
-      { name: "绿宝蜜瓜", has: true }, { name: "西瓜冰", has: true }, { name: "草莓口香糖", has: true },
-      { name: "西柚百香果", has: true }, { name: "蓝莓冰", has: true }, { name: "葡萄乳酸菌", has: true },
-      { name: "可乐冰", has: true }, { name: "草莓雪冰", has: true }
-    ]
-  },
-  {
-    category: "冰爆 ICEMAX",
-    items: [
-      { name: "绿豆", has: true }, { name: "老冰棍", has: true }, { name: "青苹果", has: true },
-      { name: "可乐", has: true }, { name: "薄荷", has: true }, { name: "奇异果", has: true },
-      { name: "宝矿力", has: true }, { name: "桂花乌龙", has: true }, { name: "荔枝", has: true },
-      { name: "草莓", has: true }, { name: "百香果", has: true }, { name: "番石榴", has: true },
-      { name: "西瓜", has: true }, { name: "茉莉奶茶", has: true }, { name: "青提", has: true },
-      { name: "桃子", has: true }, { name: "柠檬", has: true }, { name: "龙井", has: true },
-      { name: "黄瓜柠檬", has: true }, { name: "梅子绿茶", has: true }, { name: "金桔蜂蜜", has: true },
-      { name: "芦荟青柠", has: true }
-    ]
-  },
-  {
-    category: "Rocket小火箭",
-    items: [
-      { name: "绿豆", has: true }, { name: "泰椰子水", has: true }, { name: "宝矿力", has: true },
-      { name: "香芋", has: true }, { name: "绿宝石甜瓜", has: true }, { name: "海盐柠檬", has: true },
-      { name: "草莓冰淇淋", has: true }, { name: "奇异果", has: true }, { name: "山楂气泡水", has: true },
-      { name: "百香果葡萄柚", has: true }, { name: "番石榴", has: true }, { name: "薄荷", has: true },
-      { name: "青提", has: true }, { name: "蓝莓酸奶", has: true }, { name: "葡萄", has: true },
-      { name: "清爽双苹果", has: true }, { name: "荔枝", has: true }, { name: "西瓜", has: true },
-      { name: "龙井", has: true }, { name: "柠檬菠萝", has: true }
-    ]
-  },
-  {
-    category: "wild小野外星人",
-    items: [
-      { name: "葡萄", has: true }, { name: "草莓", has: true }, { name: "极寒刃", has: true },
-      { name: "桃子", has: true }, { name: "苹果", has: true }, { name: "薄荷", has: true },
-      { name: "宝矿力", has: true }, { name: "柠檬橙子", has: true }, { name: "铁观音", has: true },
-      { name: "龙井", has: true }, { name: "西瓜", has: true }, { name: "菠萝", has: true },
-      { name: "番石榴", has: true }, { name: "荔枝", has: true }
-    ]
-  },
-  {
-    category: "YOOZ独角兽",
-    items: [
-      { name: "青柑茶", has: true }, { name: "青提茉莉", has: true }, { name: "薄荷口香糖", has: true },
-      { name: "绿豆", has: true }, { name: "快乐养乐多", has: true }, { name: "冰镇西瓜", has: true },
-      { name: "灵魂薄荷", has: true }, { name: "菠萝", has: true }, { name: "青提", has: true },
-      { name: "乌龙茶", has: true }, { name: "斩铁剑薄荷", has: true }, { name: "荔枝冰", has: true },
-      { name: "桃子冰", has: true }, { name: "茉莉绿茶", has: true }, { name: "柠檬茶", has: true },
-      { name: "葡萄柚", has: true }, { name: "龙井", has: true }, { name: "葡萄", has: true },
-      { name: "草莓", has: true }, { name: "鲜橙子汽水", has: true }, { name: "冰镇椰子汁", has: true },
-      { name: "淘气柚子茶", has: true }, { name: "红酒", has: true }, { name: "番石榴", has: true },
-      { name: "牛奶", has: true }, { name: "山楂", has: true }
-    ]
-  },
-  {
-    category: "zgar冰熊2w",
-    items: [
-      { name: "西瓜冰", has: true }, { name: "留兰香薄荷", has: true }, { name: "草莓芒果", has: true },
-      { name: "酸苹果", has: true }, { name: "青提", has: true }, { name: "椰子水", has: true },
-      { name: "树莓西瓜", has: true }, { name: "樱桃可乐", has: true }, { name: "混合浆果", has: true }
-    ]
-  },
-  {
-    category: "冰熊传奇6k",
-    items: [
-      { name: "三芒", has: true }, { name: "青提", has: true }, { name: "薄荷", has: true },
-      { name: "冰爽青柠", has: true }, { name: "海盐柠檬", has: true }, { name: "凝霜茶", has: true },
-      { name: "葡萄", has: true }, { name: "百香果", has: true }, { name: "西柚", has: true },
-      { name: "绿豆", has: true }, { name: "青椰甘露", has: true }, { name: "老冰棍", has: true },
-      { name: "柠檬菠萝", has: true }, { name: "矿泉水", has: true }, { name: "草莓奇异果", has: true },
-      { name: "芭乐", has: true }, { name: "零度可乐", has: true }, { name: "荔枝冰", has: true },
-      { name: "龙井", has: true }, { name: "西瓜冰", has: true }
-    ]
-  },
-  {
-    category: "REXI 4000",
-    items: [
-      { name: "普洱茶", has: true }, { name: "可乐", has: true }, { name: "绿豆", has: true },
-      { name: "芒果", has: true }, { name: "极地茉莉", has: true }, { name: "香芋", has: true },
-      { name: "柠檬红茶", has: true }, { name: "宝矿力", has: true }, { name: "山楂", has: true },
-      { name: "矿泉水", has: true }, { name: "奇异果", has: true }, { name: "葡萄", has: true },
-      { name: "龙井", has: true }, { name: "菠萝", has: true }, { name: "荔枝", has: true },
-      { name: "椰子水", has: true }, { name: "薄荷", has: true }, { name: "百香果", has: true },
-      { name: "青提", has: true }, { name: "西瓜", has: true }, { name: "番石榴", has: true },
-      { name: "百香果西柚", has: true }, { name: "青芒", has: true }, { name: "铁观音", has: true }
-    ]
-  },
-  {
-    category: "REXI 板砖 2w",
-    items: [
-      { name: "抹茶", has: true }, { name: "椰子水", has: true }, { name: "西瓜", has: true },
-      { name: "野酸味", has: true }, { name: "宝矿力", has: true }, { name: "龙井", has: true },
-      { name: "葡萄", has: true }, { name: "猕猴桃", has: true }, { name: "铁观音", has: true },
-      { name: "青提", has: true }, { name: "菠萝", has: true }, { name: "百香果", has: true },
-      { name: "薄荷", has: true }, { name: "酸梅绿茶", has: true }, { name: "茉莉绿茶", has: true },
-      { name: "柠檬茶", has: true }, { name: "绿豆", has: true }, { name: "香蕉", has: true }
-    ]
-  },
-  {
-    category: "松 A38",
-    items: [
-      { name: "柠檬可乐", has: true }, { name: "龙井", has: true }, { name: "奇异果", has: true },
-      { name: "荔枝", has: true }, { name: "西瓜", has: true }, { name: "白桃乌龙", has: true },
-      { name: "蓝莓", has: true }, { name: "青提", has: true }, { name: "黑加仑", has: true },
-      { name: "杨梅", has: true }, { name: "菠萝", has: true }, { name: "芭乐", has: true },
-      { name: "青苹果", has: true }, { name: "百香果", has: true }
-    ]
-  },
-  {
-    category: "松 A55",
-    items: [
-      { name: "菠萝", has: true }, { name: "薄荷", has: true }, { name: "西柚百香果", has: true },
-      { name: "青苹果", has: true }, { name: "龙井", has: true }, { name: "椰子", has: true },
-      { name: "巨峰葡萄", has: true }, { name: "青提", has: true }, { name: "番石榴", has: true },
-      { name: "老冰棍", has: true }, { name: "草莓", has: true }
-    ]
-  }
-];
-
-// 本地存储初始化
-let menuData = JSON.parse(localStorage.getItem('my_fruit_menu_data')) || defaultData;
-let showDelete = false;
-
-function saveData() {
-  localStorage.setItem('my_fruit_menu_data', JSON.stringify(menuData));
-}
-
-// 渲染列表
-function render() {
-  const container = document.getElementById('menuGrid');
-  container.innerHTML = '';
-
-  menuData.forEach((cat, catIdx) => {
-    const box = document.createElement('div');
-    box.className = 'category-box';
-
-    let itemsHtml = cat.items.map((it, itIdx) => `
-      <li class="item-row">
-        <div class="item-left">
-          ${showDelete ? `<span class="del-btn" onclick="deleteItem(${catIdx},${itIdx})">✕</span>` : ''}
-          <span class="item-name">${it.name}</span>
-        </div>
-        <span class="status-badge ${it.has ? 'status-has' : 'status-none'}" onclick="toggleStatus(${catIdx}, ${itIdx})">
-          ${it.has ? '有' : '缺'}
-        </span>
-      </li>
-    `).join('');
-
-    box.innerHTML = `
-      <div class="cat-header">${cat.category}</div>
-      <ul class="item-list">${itemsHtml}</ul>
-      <div class="add-item-box">
-        <input type="text" class="add-input" id="input-${catIdx}" placeholder="加新口味..." onkeydown="handleEnter(event, ${catIdx})">
-        <button class="add-btn" onclick="addItem(${catIdx})">➕</button>
+<div id="poster-canvas">
+  <!-- 顶部美式招牌 -->
+  <div class="header">
+    <div class="header-banner">
+      <div class="apple-avatar">🕶️</div>
+      <div class="header-titles">
+        <h1>不卖水果的水果铺</h1>
+        <div class="header-tag">今日全员在线 ｜ 专治挑食嘴刁 ｜ 按型号对号入座</div>
       </div>
-    `;
-    container.appendChild(box);
+    </div>
+  </div>
+
+  <!-- 14 个绝对独立的分类货架 (严禁混淆) -->
+  <div class="shelf-grid">
+    <!-- 01 -->
+    <div class="model-card">
+      <div class="model-head tag-c1"><span>【YZ 鸭嘴客】</span><span>14款</span></div>
+      <div class="flavor-box">
+        <span>青提</span><span>白雾红尘</span><span>西柚百香果</span><span>茉莉龙井</span><span>西瓜</span><span>水蜜桃</span><span>杨枝甘露</span><span>洛神花茶</span><span>矿泉水</span><span>蜂蜜柚子</span><span>冰爽青柠</span><span>红苹果</span><span>手打柠檬茶</span><span>紫晶葡萄</span>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="model-card">
+      <div class="model-head tag-c2"><span>【BZ 方块砖】</span><span>7款</span></div>
+      <div class="flavor-box">
+        <span>绿宝蜜瓜</span><span>西瓜冰</span><span>草莓口香糖</span><span>葡萄乳酸菌</span><span>蓝拉滋</span><span>可乐冰</span><span>草莓雪冰</span>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="model-card">
+      <div class="model-head tag-c3"><span>【冰爆 ICX】</span><span>22款</span></div>
+      <div class="flavor-box">
+        <span>绿豆</span><span>老冰棍</span><span>青苹果</span><span>可乐</span><span>薄荷</span><span>奇异果</span><span>宝矿力</span><span>桂花乌龙</span><span>荔枝</span><span>草莓</span><span>百香果</span><span>番石榴</span><span>西瓜</span><span>茉莉奶茶</span><span>青提</span><span>桃子</span><span>柠檬</span><span>龙井</span><span>黄瓜柠檬</span><span>梅子绿茶</span><span>金柚蜂蜜</span><span>芦荟青柠</span>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="model-card">
+      <div class="model-head tag-c4"><span>【RK 小火箭】</span><span>18款</span></div>
+      <div class="flavor-box">
+        <span>绿豆</span><span>泰椰子水</span><span>宝矿力</span><span>香芋</span><span>绿宝石甜瓜</span><span>海盐柠檬</span><span>草莓冰淇淋</span><span>奇异果</span><span>山楂气泡水</span><span>百香果葡萄柚</span><span>葡萄</span><span>薄荷</span><span>西瓜</span><span>蓝莓酸奶</span><span>荔枝</span><span>清爽双苹果</span><span>龙井</span><span>柠檬菠萝</span>
+      </div>
+    </div>
+
+    <!-- 05 -->
+    <div class="model-card">
+      <div class="model-head tag-c5"><span>【ET 外星客】</span><span>14款</span></div>
+      <div class="flavor-box">
+        <span>葡萄</span><span>草莓</span><span>极寒刃</span><span>桃子</span><span>苹果</span><span>薄荷</span><span>宝矿力</span><span>柠檬橙子</span><span>铁观音</span><span>龙井</span><span>西瓜</span><span>菠萝</span><span>番石榴</span><span>荔枝</span>
+      </div>
+    </div>
+
+    <!-- 06 -->
+    <div class="model-card">
+      <div class="model-head tag-c1"><span>【Y柚 独角兽】</span><span>25款</span></div>
+      <div class="flavor-box">
+        <span>青柑茶</span><span>青提茉莉</span><span>薄荷口香糖</span><span>绿豆</span><span>快乐养乐多</span><span>冰镇西瓜</span><span>灵魂薄荷</span><span>菠萝</span><span>青提</span><span>乌龙茶</span><span>斩铁剑薄荷</span><span>荔枝冰</span><span>茉莉绿茶</span><span>柠檬茶</span><span>葡萄柚</span><span>龙井</span><span>葡萄</span><span>草莓</span><span>鲜橙子汽水</span><span>冰镇椰子汁</span><span>淘气柚子茶</span><span>红酒</span><span>番石榴</span><span>牛奶</span><span>山楂</span>
+      </div>
+    </div>
+
+    <!-- 07 -->
+    <div class="model-card">
+      <div class="model-head tag-c2"><span>【Z加 冰熊 20000】</span><span>9款</span></div>
+      <div class="flavor-box">
+        <span>西瓜冰</span><span>留兰香薄荷</span><span>草莓芒果</span><span>酸苹果</span><span>青提</span><span>椰子水</span><span>树莓西瓜</span><span>樱桃可乐</span><span>混合浆果</span>
+      </div>
+    </div>
+
+    <!-- 08 -->
+    <div class="model-card">
+      <div class="model-head tag-c3"><span>【传奇 6000】</span><span>20款</span></div>
+      <div class="flavor-box">
+        <span>三芒</span><span>青提</span><span>薄荷</span><span>冰爽青柠</span><span>海盐柠檬</span><span>凝霜茶</span><span>葡萄</span><span>百香果</span><span>西柚</span><span>绿豆</span><span>青柑甘露</span><span>老冰棍</span><span>柠檬菠萝</span><span>矿泉水</span><span>草莓奇异果</span><span>芭乐</span><span>零度可乐</span><span>荔枝冰</span><span>龙井</span><span>西瓜冰</span>
+      </div>
+    </div>
+
+    <!-- 09 -->
+    <div class="model-card">
+      <div class="model-head tag-c4"><span>【瑞X ACE】</span><span>2款</span></div>
+      <div class="flavor-box">
+        <span>西瓜茉莉花茶</span><span>烘焙铁观音</span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="model-card">
+      <div class="model-head tag-c5"><span>【瑞X 4000】</span><span>24款</span></div>
+      <div class="flavor-box">
+        <span>普洱茶</span><span>可乐</span><span>绿豆</span><span>芒果</span><span>极地茉莉</span><span>香芋</span><span>柠檬红茶</span><span>宝矿力</span><span>山楂</span><span>矿泉水</span><span>奇异果</span><span>葡萄</span><span>龙井</span><span>菠萝</span><span>荔枝</span><span>椰子水</span><span>薄荷</span><span>百香果</span><span>青提</span><span>西瓜</span><span>番石榴</span><span>百香果西柚</span><span>青芒</span><span>铁观音</span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="model-card">
+      <div class="model-head tag-c1"><span>【瑞X 板砖 20000】</span><span>17款</span></div>
+      <div class="flavor-box">
+        <span>抹茶</span><span>椰子水</span><span>西瓜</span><span>野酸味</span><span>宝矿力</span><span>龙井</span><span>葡萄</span><span>猕猴桃</span><span>铁观音</span><span>青提</span><span>菠萝</span><span>百香果</span><span>薄荷</span><span>茉莉绿茶</span><span>柠檬茶</span><span>绿豆</span><span>香蕉</span>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="model-card">
+      <div class="model-head tag-c2"><span>【瑞X 极凉 12000】</span><span>8款</span></div>
+      <div class="flavor-box">
+        <span>西瓜茉莉</span><span>白桃</span><span>葡萄铁观音</span><span>葡萄冰</span><span>海盐柠檬</span><span>西瓜冰</span><span>极凉薄荷</span><span>铁观音</span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="model-card">
+      <div class="model-head tag-c3"><span>【松林 A38】</span><span>14款</span></div>
+      <div class="flavor-box">
+        <span>柠檬可乐</span><span>龙井</span><span>奇异果</span><span>荔枝</span><span>西柚</span><span>白桃乌龙</span><span>蓝莓</span><span>青提</span><span>黑加仑</span><span>杨梅</span><span>菠萝</span><span>芭乐</span><span>青苹果</span><span>百香果</span>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="model-card">
+      <div class="model-head tag-c4"><span>【松林 A55】</span><span>11款</span></div>
+      <div class="flavor-box">
+        <span>菠萝</span><span>薄荷</span><span>西柚百香果</span><span>青苹果</span><span>龙井</span><span>椰子</span><span>巨峰葡萄</span><span>青提</span><span>番石榴</span><span>老冰棍</span><span>草莓</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部纯粹背书 (零废话) -->
+  <div class="footer">
+    <div class="footer-trust">扎根第4年 ｜ 只做熟客口碑 ｜ 踏实做事不搞虚的 🤝 全线现货在线</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+function takeSnapshot() {
+  const el = document.getElementById('poster-canvas');
+  html2canvas(el, { scale: 3, useCORS: true }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = '水果铺今日风味海报.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
   });
 }
-
-// 切换“有/缺”状态
-function toggleStatus(catIdx, itIdx) {
-  menuData[catIdx].items[itIdx].has = !menuData[catIdx].items[itIdx].has;
-  saveData();
-  render();
-}
-
-// 增加新口味
-function addItem(catIdx) {
-  const input = document.getElementById(`input-${catIdx}`);
-  const val = input.value.trim();
-  if (!val) return;
-  menuData[catIdx].items.push({ name: val, has: true });
-  input.value = '';
-  saveData();
-  render();
-}
-
-function handleEnter(e, catIdx) {
-  if (e.key === 'Enter') addItem(catIdx);
-}
-
-// 减少/删除口味
-function deleteItem(catIdx, itIdx) {
-  menuData[catIdx].items.splice(itIdx, 1);
-  saveData();
-  render();
-}
-
-// 切换删除小红叉
-function toggleEditIcons() {
-  showDelete = !showDelete;
-  render();
-}
-
-// 朋友圈截图模式（退出直接在任意空白处点两下）
-function toggleScreenshotMode() {
-  document.body.classList.toggle('screenshot-mode');
-  if (document.body.classList.contains('screenshot-mode')) {
-    alert("📸 已进入朋友圈截图模式！\n- 所有添加框和控制按钮已自动隐藏。\n- 此时可用手机直接截长图。\n- 双击屏幕任意位置即可退出截图模式。");
-  }
-}
-document.addEventListener('dblclick', () => {
-  if (document.body.classList.contains('screenshot-mode')) {
-    document.body.classList.remove('screenshot-mode');
-  }
-});
-
-// 重置默认
-function resetToDefault() {
-  if (confirm("确定要恢复到最初的预设菜单吗？")) {
-    menuData = JSON.parse(JSON.stringify(defaultData));
-    saveData();
-    render();
-  }
-}
-
-// 首次渲染
-render();
 </script>
-
 </body>
 </html>
