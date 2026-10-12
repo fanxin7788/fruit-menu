@@ -14,39 +14,172 @@
     padding: 20px 10px;
     font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   }
-  
-  /* 顶部操作区（完全在海报画布之外，绝不影响海报画面） */
-  .btn-bar {
+
+  /* ---------------- 画布外侧操作面板 (截图绝不包含) ---------------- */
+  .control-panel {
+    width: 480px;
+    background: #2b221c;
+    border: 3px solid #3d2314;
+    border-radius: 14px;
+    padding: 14px;
     margin-bottom: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  }
+  .panel-header {
     display: flex;
-    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .panel-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #e9c46a;
+  }
+  .btn-group {
+    display: flex;
+    gap: 8px;
     flex-wrap: wrap;
-    justify-content: center;
   }
   .action-btn {
     font-weight: 800;
-    font-size: 15px;
-    padding: 10px 20px;
-    border: 3px solid #3d2314;
-    border-radius: 30px;
-    box-shadow: 0 4px 0 #3d2314;
+    font-size: 13px;
+    padding: 8px 14px;
+    border: 2px solid #3d2314;
+    border-radius: 20px;
     cursor: pointer;
+    box-shadow: 0 3px 0 #3d2314;
     transition: all 0.1s;
-  }
-  .export-btn {
-    background: #e76f51;
-    color: #fff;
-  }
-  .manage-btn {
-    background: #e9c46a;
-    color: #3d2314;
   }
   .action-btn:active {
     transform: translateY(2px);
-    box-shadow: 0 2px 0 #3d2314;
+    box-shadow: 0 1px 0 #3d2314;
+  }
+  .btn-export { background: #e76f51; color: #fff; }
+  .btn-import { background: #2a9d8f; color: #fff; }
+  .btn-toggle { background: #e9c46a; color: #3d2314; }
+
+  /* 批量导入编辑框 */
+  .import-box {
+    display: none;
+    margin-top: 10px;
+    background: #1e1713;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1.5px dashed #4e382b;
+  }
+  .import-box.active { display: block; }
+  .import-textarea {
+    width: 100%;
+    height: 120px;
+    background: #2b221c;
+    color: #f7eedd;
+    border: 1.5px solid #3d2314;
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 12px;
+    line-height: 1.5;
+    outline: none;
+    resize: vertical;
+  }
+  .import-tip {
+    font-size: 11px;
+    color: #a89f91;
+    margin: 6px 0 8px;
+    line-height: 1.4;
   }
 
-  /* 9:16 标准海报画布 (1080x1920 等比缩小展示) */
+  /* 快捷微调抽屉 */
+  .quick-edit-box {
+    display: none;
+    margin-top: 10px;
+    max-height: 320px;
+    overflow-y: auto;
+    padding: 6px;
+    background: #1e1713;
+    border-radius: 8px;
+  }
+  .quick-edit-box.active { display: block; }
+  .edit-series-card {
+    background: #2b221c;
+    border: 1.5px solid #3d2314;
+    border-radius: 6px;
+    padding: 8px;
+    margin-bottom: 8px;
+  }
+  .edit-series-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .edit-title-input {
+    background: #1a1614;
+    color: #fff;
+    border: 1px solid #4e382b;
+    border-radius: 4px;
+    padding: 3px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    flex: 1;
+  }
+  .btn-del-series {
+    background: #c1121f;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 11px;
+    cursor: pointer;
+  }
+  .edit-chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+  .edit-chip {
+    background: #3d2e24;
+    color: #f7eedd;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 12px;
+    border: 1px solid #5a4233;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .edit-chip .del-x {
+    color: #e76f51;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .add-item-row {
+    display: flex;
+    gap: 4px;
+  }
+  .add-item-input {
+    flex: 1;
+    background: #1a1614;
+    color: #fff;
+    border: 1px solid #4e382b;
+    border-radius: 4px;
+    padding: 3px 6px;
+    font-size: 11px;
+  }
+  .btn-add-item {
+    background: #2a9d8f;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  /* ---------------- 9:16 标准海报画布 (1080x1920) ---------------- */
   #poster-canvas {
     width: 480px;
     background-color: #f7eedd;
@@ -58,7 +191,6 @@
     display: flex;
     flex-direction: column;
   }
-  /* 顶部美式招牌 */
   .header {
     background: #e76f51;
     border-bottom: 6px solid #3d2314;
@@ -82,7 +214,6 @@
     object-fit: cover;
     display: block;
     flex-shrink: 0;
-    cursor: pointer;
   }
   .header-titles h1 {
     font-size: 32px;
@@ -102,7 +233,6 @@
     border: 2px solid #3d2314;
     margin-top: 4px;
   }
-  /* 核心 14 格独立货架区 (双列瀑布流) */
   .shelf-grid {
     padding: 10px 8px;
     display: grid;
@@ -137,6 +267,7 @@
   .tag-c3 { background: #f4a261; }
   .tag-c4 { background: #457b9d; }
   .tag-c5 { background: #e9c46a; color: #3d2314 !important; }
+
   .flavor-box {
     font-size: 10.5px;
     line-height: 1.55;
@@ -156,7 +287,6 @@
   .flavor-box span:last-child::after {
     content: "";
   }
-  /* 底部背书区 */
   .footer {
     background: #3d2314;
     color: #f4a261;
@@ -169,147 +299,46 @@
     font-weight: 800;
     letter-spacing: 0.5px;
   }
-
-  /* ------------------- 管理弹窗层（平时隐藏，不破坏任何布局） ------------------- */
-  .modal-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.75);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    padding: 15px;
-  }
-  .modal-overlay.active {
-    display: flex;
-  }
-  .modal-content {
-    background: #fbf5ea;
-    width: 100%;
-    max-width: 600px;
-    max-height: 85vh;
-    border: 4px solid #3d2314;
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-  }
-  .modal-header {
-    background: #e76f51;
-    color: #fff;
-    padding: 12px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 3px solid #3d2314;
-  }
-  .modal-header h3 { font-size: 18px; font-weight: 900; }
-  .close-btn {
-    background: #3d2314;
-    color: #fff;
-    border: none;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .modal-body {
-    padding: 15px;
-    overflow-y: auto;
-    flex: 1;
-  }
-  .manage-group {
-    background: #fff;
-    border: 2px solid #3d2314;
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 12px;
-  }
-  .manage-group-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-    font-weight: 900;
-    font-size: 14px;
-    color: #3d2314;
-    border-bottom: 1.5px dashed #ccc;
-    padding-bottom: 4px;
-  }
-  .chip-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 8px;
-  }
-  .chip {
-    font-size: 12px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 16px;
-    border: 1.5px solid #3d2314;
-    cursor: pointer;
-    user-select: none;
-    transition: all 0.1s;
-  }
-  /* 激活状态（海报上有该口味） */
-  .chip.active {
-    background: #2a9d8f;
-    color: #fff;
-  }
-  /* 禁用状态（海报上隐藏该口味） */
-  .chip.inactive {
-    background: #eee;
-    color: #999;
-    border-color: #bbb;
-    text-decoration: line-through;
-  }
-  .add-flavor-row {
-    display: flex;
-    gap: 6px;
-  }
-  .add-flavor-input {
-    flex: 1;
-    border: 1.5px solid #3d2314;
-    border-radius: 6px;
-    padding: 4px 8px;
-    font-size: 12px;
-  }
-  .add-flavor-btn {
-    background: #3d2314;
-    color: #ffd60a;
-    border: none;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .modal-footer {
-    background: #eee;
-    border-top: 2px solid #3d2314;
-    padding: 10px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
 </style>
 </head>
 <body>
 
-<!-- 操作按钮栏（海报截图时完全不包含） -->
-<div class="btn-bar">
-  <button class="action-btn export-btn" onclick="takeSnapshot()">📸 点击直接保存高清海报</button>
-  <button class="action-btn manage-btn" onclick="openModal()">⚙️ 点选开关/修改口味</button>
+<!-- 操作面板（画布外，截图不包含） -->
+<div class="control-panel">
+  <div class="panel-header">
+    <span class="panel-title">🛠️ 每日现货库存管理</span>
+    <span style="font-size: 11px; color: #a89f91;">改动即时生效并保存</span>
+  </div>
+  <div class="btn-group">
+    <button class="action-btn btn-export" onclick="takeSnapshot()">📸 保存高清海报</button>
+    <button class="action-btn btn-import" onclick="toggleImportBox()">📋 批量粘贴导入</button>
+    <button class="action-btn btn-toggle" onclick="toggleQuickEdit()">✏️ 快捷微调/增删</button>
+  </div>
+
+  <!-- 选项A：大文本框批量导入 -->
+  <div class="import-box" id="importBox">
+    <div class="import-tip">
+      粘贴说明：每行一个系列，格式为 <b>【系列名】口味1 口味2 口味3</b>（用空格、逗号或点号隔开皆可）：
+    </div>
+    <textarea class="import-textarea" id="importText" placeholder="例如：&#10;【YZ 鸭嘴】青提 白雾红尘 西柚百香果 茉莉龙井 西瓜&#10;【BZ 板砖】绿宝蜜瓜 西瓜冰 草莓口香糖&#10;【新系列】口味A 口味B 口味C"></textarea>
+    <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;">
+      <button class="action-btn" style="background:#555; color:#fff;" onclick="fillCurrentText()">导出当前文本</button>
+      <button class="action-btn btn-import" onclick="executeBatchImport()">🚀 解析并覆盖海报</button>
+    </div>
+  </div>
+
+  <!-- 快捷点选微调栏 -->
+  <div class="quick-edit-box" id="quickEditBox">
+    <div id="seriesEditList"></div>
+    <button class="action-btn" style="width: 100%; margin-top: 6px; background: #2a9d8f; color:#fff;" onclick="addNewSeries()">➕ 新增系列货架</button>
+  </div>
 </div>
 
-<!-- 海报区域 -->
+<!-- 9:16 标准海报主体 -->
 <div id="poster-canvas">
   <div class="header">
     <div class="header-banner">
-      <!-- 点击头像也能快速打开管理后台 -->
-      <img src="IMG_0677.jpeg" class="apple-avatar" alt="苹果老板" onclick="openModal()" title="点击管理菜单">
+      <img src="IMG_0677.jpeg" class="apple-avatar" alt="苹果老板">
       <div class="header-titles">
         <h1>不卖水果的水果铺</h1>
         <div class="header-tag">今日全员在线 ｜ 专治挑食嘴刁 ｜ 认准系列 对号入座</div>
@@ -317,7 +346,6 @@
     </div>
   </div>
 
-  <!-- 14 个货架由 JS 动态渲染 -->
   <div class="shelf-grid" id="shelf-grid"></div>
 
   <div class="footer">
@@ -325,279 +353,200 @@
   </div>
 </div>
 
-<!-- 点选管理弹窗 -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3>⚙️ 今日现货口味点选（点一下开关）</h3>
-      <button class="close-btn" onclick="closeModal()">✕ 完成关闭</button>
-    </div>
-    <div class="modal-body" id="modalBody"></div>
-    <div class="modal-footer">
-      <span style="font-size: 11px; color: #666;">绿色=今日有货 ｜ 灰色带横线=今日缺货</span>
-      <button class="action-btn export-btn" style="padding: 6px 14px; font-size: 13px;" onclick="closeModal()">保存并更新海报</button>
-    </div>
-  </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
-// 14个系列全量内置口味库 (带上对应的颜色主题)
-const initialShelves = [
-  {
-    title: "【YZ 鸭嘴】", colorClass: "tag-c1",
-    flavors: [
-      { name: "青提", active: true }, { name: "白雾红尘", active: true }, { name: "西柚百香果", active: true },
-      { name: "茉莉龙井", active: true }, { name: "西瓜", active: true }, { name: "水蜜桃", active: true },
-      { name: "杨枝甘露", active: true }, { name: "洛神花茶", active: true }, { name: "矿泉水", active: true },
-      { name: "蜂蜜柚子", active: true }, { name: "冰爽青柠", active: true }, { name: "红苹果", active: true },
-      { name: "手打柠檬茶", active: true }, { name: "紫晶葡萄", active: true }
-    ]
-  },
-  {
-    title: "【BZ 板砖】", colorClass: "tag-c2",
-    flavors: [
-      { name: "绿宝蜜瓜", active: true }, { name: "西瓜冰", active: true }, { name: "草莓口香糖", active: true },
-      { name: "葡萄乳酸菌", active: true }, { name: "蓝拉滋", active: true }, { name: "可乐冰", active: true },
-      { name: "草莓雪冰", active: true }
-    ]
-  },
-  {
-    title: "【冰爆 ICX】", colorClass: "tag-c3",
-    flavors: [
-      { name: "绿豆", active: true }, { name: "老冰棍", active: true }, { name: "青苹果", active: true },
-      { name: "可乐", active: true }, { name: "薄荷", active: true }, { name: "奇异果", active: true },
-      { name: "宝矿力", active: true }, { name: "桂花乌龙", active: true }, { name: "荔枝", active: true },
-      { name: "草莓", active: true }, { name: "百香果", active: true }, { name: "番石榴", active: true },
-      { name: "西瓜", active: true }, { name: "茉莉奶茶", active: true }, { name: "青提", active: true },
-      { name: "桃子", active: true }, { name: "柠檬", active: true }, { name: "龙井", active: true },
-      { name: "黄瓜柠檬", active: true }, { name: "梅子绿茶", active: true }, { name: "金柚蜂蜜", active: true },
-      { name: "芦荟青柠", active: true }
-    ]
-  },
-  {
-    title: "【RK 小火箭】", colorClass: "tag-c4",
-    flavors: [
-      { name: "绿豆", active: true }, { name: "泰椰子水", active: true }, { name: "宝矿力", active: true },
-      { name: "香芋", active: true }, { name: "绿宝石甜瓜", active: true }, { name: "海盐柠檬", active: true },
-      { name: "草莓冰淇淋", active: true }, { name: "奇异果", active: true }, { name: "山楂气泡水", active: true },
-      { name: "百香果葡萄柚", active: true }, { name: "葡萄", active: true }, { name: "薄荷", active: true },
-      { name: "西瓜", active: true }, { name: "蓝莓酸奶", active: true }, { name: "荔枝", active: true },
-      { name: "清爽双苹果", active: true }, { name: "龙井", active: true }, { name: "柠檬菠萝", active: true }
-    ]
-  },
-  {
-    title: "【外星人】", colorClass: "tag-c5",
-    flavors: [
-      { name: "葡萄", active: true }, { name: "草莓", active: true }, { name: "极寒刃", active: true },
-      { name: "桃子", active: true }, { name: "苹果", active: true }, { name: "薄荷", active: true },
-      { name: "宝矿力", active: true }, { name: "柠檬橙子", active: true }, { name: "铁观音", active: true },
-      { name: "龙井", active: true }, { name: "西瓜", active: true }, { name: "菠萝", active: true },
-      { name: "番石榴", active: true }, { name: "荔枝", active: true }
-    ]
-  },
-  {
-    title: "【Y柚 独角兽】", colorClass: "tag-c1",
-    flavors: [
-      { name: "青柑茶", active: true }, { name: "青提茉莉", active: true }, { name: "薄荷口香糖", active: true },
-      { name: "绿豆", active: true }, { name: "快乐养乐多", active: true }, { name: "冰镇西瓜", active: true },
-      { name: "灵魂薄荷", active: true }, { name: "菠萝", active: true }, { name: "青提", active: true },
-      { name: "乌龙茶", active: true }, { name: "斩铁剑薄荷", active: true }, { name: "荔枝冰", active: true },
-      { name: "茉莉绿茶", active: true }, { name: "柠檬茶", active: true }, { name: "葡萄柚", active: true },
-      { name: "龙井", active: true }, { name: "葡萄", active: true }, { name: "草莓", active: true },
-      { name: "鲜橙子汽水", active: true }, { name: "冰镇椰子汁", active: true }, { name: "淘气柚子茶", active: true },
-      { name: "红酒", active: true }, { name: "番石榴", active: true }, { name: "牛奶", active: true },
-      { name: "山楂", active: true }
-    ]
-  },
-  {
-    title: "【Z加 冰熊 20000】", colorClass: "tag-c2",
-    flavors: [
-      { name: "西瓜冰", active: true }, { name: "留兰香薄荷", active: true }, { name: "草莓芒果", active: true },
-      { name: "酸苹果", active: true }, { name: "青提", active: true }, { name: "椰子水", active: true },
-      { name: "树莓西瓜", active: true }, { name: "樱桃可乐", active: true }, { name: "混合浆果", active: true }
-    ]
-  },
-  {
-    title: "【冰熊传奇 6000】", colorClass: "tag-c3",
-    flavors: [
-      { name: "三芒", active: true }, { name: "青提", active: true }, { name: "薄荷", active: true },
-      { name: "冰爽青柠", active: true }, { name: "海盐柠檬", active: true }, { name: "凝霜茶", active: true },
-      { name: "葡萄", active: true }, { name: "百香果", active: true }, { name: "西柚", active: true },
-      { name: "绿豆", active: true }, { name: "青柑甘露", active: true }, { name: "老冰棍", active: true },
-      { name: "柠檬菠萝", active: true }, { name: "矿泉水", active: true }, { name: "草莓奇异果", active: true },
-      { name: "芭乐", active: true }, { name: "零度可乐", active: true }, { name: "荔枝冰", active: true },
-      { name: "龙井", active: true }, { name: "西瓜冰", active: true }
-    ]
-  },
-  {
-    title: "【REXI ACE】", colorClass: "tag-c4",
-    flavors: [
-      { name: "西瓜茉莉花茶", active: true }, { name: "烘焙铁观音", active: true }
-    ]
-  },
-  {
-    title: "【REXI 4000】", colorClass: "tag-c5",
-    flavors: [
-      { name: "普洱茶", active: true }, { name: "可乐", active: true }, { name: "绿豆", active: true },
-      { name: "芒果", active: true }, { name: "极地茉莉", active: true }, { name: "香芋", active: true },
-      { name: "柠檬红茶", active: true }, { name: "宝矿力", active: true }, { name: "山楂", active: true },
-      { name: "矿泉水", active: true }, { name: "奇异果", active: true }, { name: "葡萄", active: true },
-      { name: "龙井", active: true }, { name: "菠萝", active: true }, { name: "荔枝", active: true },
-      { name: "椰子水", active: true }, { name: "薄荷", active: true }, { name: "百香果", active: true },
-      { name: "青提", active: true }, { name: "西瓜", active: true }, { name: "番石榴", active: true },
-      { name: "百香果西柚", active: true }, { name: "青芒", active: true }, { name: "铁观音", active: true }
-    ]
-  },
-  {
-    title: "【REXI板砖 20000】", colorClass: "tag-c1",
-    flavors: [
-      { name: "抹茶", active: true }, { name: "椰子水", active: true }, { name: "西瓜", active: true },
-      { name: "野酸味", active: true }, { name: "宝矿力", active: true }, { name: "龙井", active: true },
-      { name: "葡萄", active: true }, { name: "猕猴桃", active: true }, { name: "铁观音", active: true },
-      { name: "青提", active: true }, { name: "菠萝", active: true }, { name: "百香果", active: true },
-      { name: "薄荷", active: true }, { name: "茉莉绿茶", active: true }, { name: "柠檬茶", active: true },
-      { name: "绿豆", active: true }, { name: "香蕉", active: true }
-    ]
-  },
-  {
-    title: "【REXI极凉 12000】", colorClass: "tag-c2",
-    flavors: [
-      { name: "西瓜茉莉", active: true }, { name: "白桃", active: true }, { name: "葡萄铁观音", active: true },
-      { name: "葡萄冰", active: true }, { name: "海盐柠檬", active: true }, { name: "西瓜冰", active: true },
-      { name: "极凉薄荷", active: true }, { name: "铁观音", active: true }
-    ]
-  },
-  {
-    title: "【松 A38】", colorClass: "tag-c3",
-    flavors: [
-      { name: "柠檬可乐", active: true }, { name: "龙井", active: true }, { name: "奇异果", active: true },
-      { name: "荔枝", active: true }, { name: "西柚", active: true }, { name: "白桃乌龙", active: true },
-      { name: "蓝莓", active: true }, { name: "青提", active: true }, { name: "黑加仑", active: true },
-      { name: "杨梅", active: true }, { name: "菠萝", active: true }, { name: "芭乐", active: true },
-      { name: "青苹果", active: true }, { name: "百香果", active: true }
-    ]
-  },
-  {
-    title: "【松 A55】", colorClass: "tag-c4",
-    flavors: [
-      { name: "菠萝", active: true }, { name: "薄荷", active: true }, { name: "西柚百香果", active: true },
-      { name: "青苹果", active: true }, { name: "龙井", active: true }, { name: "椰子", active: true },
-      { name: "巨峰葡萄", active: true }, { name: "青提", active: true }, { name: "番石榴", active: true },
-      { name: "老冰棍", active: true }, { name: "草莓", active: true }
-    ]
-  }
+// 5种经典标签配色轮替
+const tagColors = ["tag-c1", "tag-c2", "tag-c3", "tag-c4", "tag-c5"];
+
+// 默认库存数据
+const defaultData = [
+  { title: "【YZ 鸭嘴】", flavors: ["青提", "白雾红尘", "西柚百香果", "茉莉龙井", "西瓜", "水蜜桃", "杨枝甘露", "洛神花茶", "矿泉水", "蜂蜜柚子", "冰爽青柠", "红苹果", "手打柠檬茶", "紫晶葡萄"] },
+  { title: "【BZ 板砖】", flavors: ["绿宝蜜瓜", "西瓜冰", "草莓口香糖", "葡萄乳酸菌", "蓝拉滋", "可乐冰", "草莓雪冰"] },
+  { title: "【冰爆 ICX】", flavors: ["绿豆", "老冰棍", "青苹果", "可乐", "薄荷", "奇异果", "宝矿力", "桂花乌龙", "荔枝", "草莓", "百香果", "番石榴", "西瓜", "茉莉奶茶", "青提", "桃子", "柠檬", "龙井", "黄瓜柠檬", "梅子绿茶", "金柚蜂蜜", "芦荟青柠"] },
+  { title: "【RK 小火箭】", flavors: ["绿豆", "泰椰子水", "宝矿力", "香芋", "绿宝石甜瓜", "海盐柠檬", "草莓冰淇淋", "奇异果", "山楂气泡水", "百香果葡萄柚", "葡萄", "薄荷", "西瓜", "蓝莓酸奶", "荔枝", "清爽双苹果", "龙井", "柠檬菠萝"] },
+  { title: "【外星人】", flavors: ["葡萄", "草莓", "极寒刃", "桃子", "苹果", "薄荷", "宝矿力", "柠檬橙子", "铁观音", "龙井", "西瓜", "菠萝", "番石榴", "荔枝"] },
+  { title: "【Y柚 独角兽】", flavors: ["青柑茶", "青提茉莉", "薄荷口香糖", "绿豆", "快乐养乐多", "冰镇西瓜", "灵魂薄荷", "菠萝", "青提", "乌龙茶", "斩铁剑薄荷", "荔枝冰", "茉莉绿茶", "柠檬茶", "葡萄柚", "龙井", "葡萄", "草莓", "鲜橙子汽水", "冰镇椰子汁", "淘气柚子茶", "红酒", "番石榴", "牛奶", "山楂"] },
+  { title: "【Z加 冰熊 20000】", flavors: ["西瓜冰", "留兰香薄荷", "草莓芒果", "酸苹果", "青提", "椰子水", "树莓西瓜", "樱桃可乐", "混合浆果"] },
+  { title: "【冰熊传奇 6000】", flavors: ["三芒", "青提", "薄荷", "冰爽青柠", "海盐柠檬", "凝霜茶", "葡萄", "百香果", "西柚", "绿豆", "青柑甘露", "老冰棍", "柠檬菠萝", "矿泉水", "草莓奇异果", "芭乐", "零度可乐", "荔枝冰", "龙井", "西瓜冰"] },
+  { title: "【REXI ACE】", flavors: ["西瓜茉莉花茶", "烘焙铁观音"] },
+  { title: "【REXI 4000】", flavors: ["普洱茶", "可乐", "绿豆", "芒果", "极地茉莉", "香芋", "柠檬红茶", "宝矿力", "山楂", "矿泉水", "奇异果", "葡萄", "龙井", "菠萝", "荔枝", "椰子水", "薄荷", "百香果", "青提", "西瓜", "番石榴", "百香果西柚", "青芒", "铁观音"] },
+  { title: "【REXI板砖 20000】", flavors: ["抹茶", "椰子水", "西瓜", "野酸味", "宝矿力", "龙井", "葡萄", "猕猴桃", "铁观音", "青提", "菠萝", "百香果", "薄荷", "茉莉绿茶", "柠檬茶", "绿豆", "香蕉"] },
+  { title: "【REXI极凉 12000】", flavors: ["西瓜茉莉", "白桃", "葡萄铁观音", "葡萄冰", "海盐柠檬", "西瓜冰", "极凉薄荷", "铁观音"] },
+  { title: "【松 A38】", flavors: ["柠檬可乐", "龙井", "奇异果", "荔枝", "西柚", "白桃乌龙", "蓝莓", "青提", "黑加仑", "杨梅", "菠萝", "芭乐", "青苹果", "百香果"] },
+  { title: "【松 A55】", flavors: ["菠萝", "薄荷", "西柚百香果", "青苹果", "龙井", "椰子", "巨峰葡萄", "青提", "番石榴", "老冰棍", "草莓"] }
 ];
 
-// 本地记忆加载
-let shelves = JSON.parse(localStorage.getItem('my_shelf_data')) || initialShelves;
+// 读取本地存储
+let currentData = JSON.parse(localStorage.getItem('my_shelf_menu_data')) || defaultData;
 
-function saveState() {
-  localStorage.setItem('my_shelf_data', JSON.stringify(shelves));
+function saveData() {
+  localStorage.setItem('my_shelf_menu_data', JSON.stringify(currentData));
 }
 
-// 渲染海报画布上的货架
+// 渲染海报画布
 function renderPoster() {
   const grid = document.getElementById('shelf-grid');
   grid.innerHTML = '';
 
-  shelves.forEach((s) => {
-    // 找出当前激活（有货）的口味
-    const activeFlavors = s.flavors.filter(f => f.active);
-
+  currentData.forEach((s, idx) => {
     const card = document.createElement('div');
     card.className = 'model-card';
-
-    const spansHtml = activeFlavors.length > 0 
-      ? activeFlavors.map(f => `<span>${f.name}</span>`).join('')
-      : `<span style="color:#999;font-style:italic;">今日暂无现货</span>`;
+    const colorClass = tagColors[idx % tagColors.length];
+    const spanList = s.flavors.map(name => `<span>${name}</span>`).join('');
 
     card.innerHTML = `
-      <div class="model-head ${s.colorClass}">
+      <div class="model-head ${colorClass}">
         <span>${s.title}</span>
-        <span>${activeFlavors.length}款</span>
+        <span>${s.flavors.length}款</span>
       </div>
       <div class="flavor-box">
-        ${spansHtml}
+        ${spanList || '<span style="color:#aaa;font-style:italic;">暂无现货</span>'}
       </div>
     `;
     grid.appendChild(card);
   });
 }
 
-// 渲染管理后台弹窗里的点选药丸
-function renderModal() {
-  const body = document.getElementById('modalBody');
-  body.innerHTML = '';
+// 渲染快捷微调面板
+function renderQuickEdit() {
+  const container = document.getElementById('seriesEditList');
+  container.innerHTML = '';
 
-  shelves.forEach((s, sIdx) => {
-    const group = document.createElement('div');
-    group.className = 'manage-group';
+  currentData.forEach((s, sIdx) => {
+    const div = document.createElement('div');
+    div.className = 'edit-series-card';
 
-    const chipsHtml = s.flavors.map((f, fIdx) => `
-      <span class="chip ${f.active ? 'active' : 'inactive'}" onclick="toggleFlavor(${sIdx}, ${fIdx})">
-        ${f.name}
+    const chips = s.flavors.map((flv, fIdx) => `
+      <span class="edit-chip">
+        ${flv}
+        <span class="del-x" onclick="removeFlavor(${sIdx}, ${fIdx})">✕</span>
       </span>
     `).join('');
 
-    group.innerHTML = `
-      <div class="manage-group-head">
-        <span>${s.title}</span>
-        <div>
-          <button style="font-size:11px;padding:2px 6px;cursor:pointer;" onclick="setAll(${sIdx}, true)">全选</button>
-          <button style="font-size:11px;padding:2px 6px;cursor:pointer;" onclick="setAll(${sIdx}, false)">全清</button>
-        </div>
+    div.innerHTML = `
+      <div class="edit-series-head">
+        <input type="text" class="edit-title-input" value="${s.title}" onchange="updateSeriesTitle(${sIdx}, this.value)">
+        <button class="btn-del-series" onclick="deleteSeries(${sIdx})">删除系列</button>
       </div>
-      <div class="chip-container">
-        ${chipsHtml}
-      </div>
-      <div class="add-flavor-row">
-        <input type="text" class="add-flavor-input" id="new-flavor-${sIdx}" placeholder="输入新出的突发口味..." onkeydown="if(event.key==='Enter') addNewFlavor(${sIdx})">
-        <button class="add-flavor-btn" onclick="addNewFlavor(${sIdx})">➕ 添加</button>
+      <div class="edit-chip-list">${chips}</div>
+      <div class="add-item-row">
+        <input type="text" class="add-item-input" id="add-input-${sIdx}" placeholder="输入新口味回车..." onkeydown="if(event.key==='Enter') addFlavor(${sIdx})">
+        <button class="btn-add-item" onclick="addFlavor(${sIdx})">添加</button>
       </div>
     `;
-    body.appendChild(group);
+    container.appendChild(div);
   });
 }
 
-// 切换某口味状态
-function toggleFlavor(sIdx, fIdx) {
-  shelves[sIdx].flavors[fIdx].active = !shelves[sIdx].flavors[fIdx].active;
-  saveState();
-  renderModal();
+// 增删口味与系列操作
+function removeFlavor(sIdx, fIdx) {
+  currentData[sIdx].flavors.splice(fIdx, 1);
+  saveData();
   renderPoster();
+  renderQuickEdit();
 }
 
-// 批量全选或全清
-function setAll(sIdx, status) {
-  shelves[sIdx].flavors.forEach(f => f.active = status);
-  saveState();
-  renderModal();
-  renderPoster();
-}
-
-// 临时添加全新口味到库中
-function addNewFlavor(sIdx) {
-  const input = document.getElementById(`new-flavor-${sIdx}`);
+function addFlavor(sIdx) {
+  const input = document.getElementById(`add-input-${sIdx}`);
   const val = input.value.trim();
   if (!val) return;
-  shelves[sIdx].flavors.push({ name: val, active: true });
+  currentData[sIdx].flavors.push(val);
   input.value = '';
-  saveState();
-  renderModal();
+  saveData();
+  renderPoster();
+  renderQuickEdit();
+}
+
+function updateSeriesTitle(sIdx, newTitle) {
+  currentData[sIdx].title = newTitle.trim();
+  saveData();
   renderPoster();
 }
 
-// 弹窗开关
-function openModal() {
-  renderModal();
-  document.getElementById('modalOverlay').classList.add('active');
-}
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('active');
+function deleteSeries(sIdx) {
+  if (confirm(`确定要移除 ${currentData[sIdx].title} 整个系列吗？`)) {
+    currentData.splice(sIdx, 1);
+    saveData();
+    renderPoster();
+    renderQuickEdit();
+  }
 }
 
-// 保存海报
+function addNewSeries() {
+  const title = prompt("请输入新系列名称（例如：【新系列名】）：");
+  if (!title) return;
+  currentData.push({ title: title.trim(), flavors: [] });
+  saveData();
+  renderPoster();
+  renderQuickEdit();
+}
+
+// 展开/收起面板
+function toggleImportBox() {
+  const el = document.getElementById('importBox');
+  el.classList.toggle('active');
+  document.getElementById('quickEditBox').classList.remove('active');
+}
+
+function toggleQuickEdit() {
+  const el = document.getElementById('quickEditBox');
+  el.classList.toggle('active');
+  document.getElementById('importBox').classList.remove('active');
+  if (el.classList.contains('active')) renderQuickEdit();
+}
+
+// 选项A：批量文本解析导入
+function executeBatchImport() {
+  const text = document.getElementById('importText').value.trim();
+  if (!text) {
+    alert("请先粘贴文本内容！");
+    return;
+  }
+
+  const lines = text.split('\n');
+  const parsed = [];
+
+  lines.forEach(line => {
+    line = line.trim();
+    if (!line) return;
+
+    // 匹配 【系列名】 以及后面的所有口味
+    const match = line.match(/^【(.*?)】\s*(.*)$/);
+    if (match) {
+      const title = `【${match[1]}】`;
+      const flvStr = match[2];
+      // 支持以空格、逗号、顿号、点号拆分
+      const flvs = flvStr.split(/[\s,，、·]+/).filter(Boolean);
+      parsed.push({ title: title, flavors: flvs });
+    } else {
+      // 兼容没有括号的普通格式（第一词当系列名）
+      const parts = line.split(/[\s,，、·]+/).filter(Boolean);
+      if (parts.length > 0) {
+        parsed.push({ title: `【${parts[0]}】`, flavors: parts.slice(1) });
+      }
+    }
+  });
+
+  if (parsed.length === 0) {
+    alert("未识别出有效系列，请检查格式是否如：【系列名】口味1 口味2");
+    return;
+  }
+
+  currentData = parsed;
+  saveData();
+  renderPoster();
+  renderQuickEdit();
+  document.getElementById('importBox').classList.remove('active');
+  alert(`成功解析并更新 ${parsed.length} 个系列！`);
+}
+
+// 导出当前数据为文本（方便复制到备忘录）
+function fillCurrentText() {
+  const text = currentData.map(s => `${s.title} ${s.flavors.join(' ')}`).join('\n');
+  document.getElementById('importText').value = text;
+}
+
+// 高清海报保存（只截画布自身）
 function takeSnapshot() {
   const el = document.getElementById('poster-canvas');
   html2canvas(el, { scale: 3, useCORS: true }).then(canvas => {
@@ -608,7 +557,7 @@ function takeSnapshot() {
   });
 }
 
-// 页面启动首次渲染
+// 启动渲染
 renderPoster();
 </script>
 </body>
