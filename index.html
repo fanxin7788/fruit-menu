@@ -14,21 +14,34 @@
     padding: 20px 10px;
     font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   }
+  
+  /* 顶部操作区（完全在海报画布之外，绝不影响海报画面） */
   .btn-bar {
     margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
-  .export-btn {
-    background: #e76f51;
-    color: #fff;
+  .action-btn {
     font-weight: 800;
-    font-size: 16px;
-    padding: 12px 28px;
+    font-size: 15px;
+    padding: 10px 20px;
     border: 3px solid #3d2314;
     border-radius: 30px;
     box-shadow: 0 4px 0 #3d2314;
     cursor: pointer;
+    transition: all 0.1s;
   }
-  .export-btn:active {
+  .export-btn {
+    background: #e76f51;
+    color: #fff;
+  }
+  .manage-btn {
+    background: #e9c46a;
+    color: #3d2314;
+  }
+  .action-btn:active {
     transform: translateY(2px);
     box-shadow: 0 2px 0 #3d2314;
   }
@@ -45,7 +58,6 @@
     display: flex;
     flex-direction: column;
   }
-
   /* 顶部美式招牌 */
   .header {
     background: #e76f51;
@@ -70,6 +82,7 @@
     object-fit: cover;
     display: block;
     flex-shrink: 0;
+    cursor: pointer;
   }
   .header-titles h1 {
     font-size: 32px;
@@ -89,7 +102,6 @@
     border: 2px solid #3d2314;
     margin-top: 4px;
   }
-
   /* 核心 14 格独立货架区 (双列瀑布流) */
   .shelf-grid {
     padding: 10px 8px;
@@ -125,7 +137,6 @@
   .tag-c3 { background: #f4a261; }
   .tag-c4 { background: #457b9d; }
   .tag-c5 { background: #e9c46a; color: #3d2314 !important; }
-
   .flavor-box {
     font-size: 10.5px;
     line-height: 1.55;
@@ -145,7 +156,6 @@
   .flavor-box span:last-child::after {
     content: "";
   }
-
   /* 底部背书区 */
   .footer {
     background: #3d2314;
@@ -159,19 +169,147 @@
     font-weight: 800;
     letter-spacing: 0.5px;
   }
+
+  /* ------------------- 管理弹窗层（平时隐藏，不破坏任何布局） ------------------- */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 15px;
+  }
+  .modal-overlay.active {
+    display: flex;
+  }
+  .modal-content {
+    background: #fbf5ea;
+    width: 100%;
+    max-width: 600px;
+    max-height: 85vh;
+    border: 4px solid #3d2314;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+  }
+  .modal-header {
+    background: #e76f51;
+    color: #fff;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #3d2314;
+  }
+  .modal-header h3 { font-size: 18px; font-weight: 900; }
+  .close-btn {
+    background: #3d2314;
+    color: #fff;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .modal-body {
+    padding: 15px;
+    overflow-y: auto;
+    flex: 1;
+  }
+  .manage-group {
+    background: #fff;
+    border: 2px solid #3d2314;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 12px;
+  }
+  .manage-group-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-weight: 900;
+    font-size: 14px;
+    color: #3d2314;
+    border-bottom: 1.5px dashed #ccc;
+    padding-bottom: 4px;
+  }
+  .chip-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .chip {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 16px;
+    border: 1.5px solid #3d2314;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.1s;
+  }
+  /* 激活状态（海报上有该口味） */
+  .chip.active {
+    background: #2a9d8f;
+    color: #fff;
+  }
+  /* 禁用状态（海报上隐藏该口味） */
+  .chip.inactive {
+    background: #eee;
+    color: #999;
+    border-color: #bbb;
+    text-decoration: line-through;
+  }
+  .add-flavor-row {
+    display: flex;
+    gap: 6px;
+  }
+  .add-flavor-input {
+    flex: 1;
+    border: 1.5px solid #3d2314;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+  .add-flavor-btn {
+    background: #3d2314;
+    color: #ffd60a;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .modal-footer {
+    background: #eee;
+    border-top: 2px solid #3d2314;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 </style>
 </head>
 <body>
 
+<!-- 操作按钮栏（海报截图时完全不包含） -->
 <div class="btn-bar">
-  <button class="export-btn" onclick="takeSnapshot()">📸 点击直接保存高清海报</button>
+  <button class="action-btn export-btn" onclick="takeSnapshot()">📸 点击直接保存高清海报</button>
+  <button class="action-btn manage-btn" onclick="openModal()">⚙️ 点选开关/修改口味</button>
 </div>
 
+<!-- 海报区域 -->
 <div id="poster-canvas">
-  <!-- 顶部美式招牌 -->
   <div class="header">
     <div class="header-banner">
-      <img src="IMG_0677.jpeg" class="apple-avatar" alt="苹果老板">
+      <!-- 点击头像也能快速打开管理后台 -->
+      <img src="IMG_0677.jpeg" class="apple-avatar" alt="苹果老板" onclick="openModal()" title="点击管理菜单">
       <div class="header-titles">
         <h1>不卖水果的水果铺</h1>
         <div class="header-tag">今日全员在线 ｜ 专治挑食嘴刁 ｜ 认准系列 对号入座</div>
@@ -179,129 +317,287 @@
     </div>
   </div>
 
-  <!-- 14 个绝对独立的分类货架 (严禁混淆) -->
-  <div class="shelf-grid">
-    <!-- 01 -->
-    <div class="model-card">
-      <div class="model-head tag-c1"><span>【YZ 鸭嘴】</span><span>14款</span></div>
-      <div class="flavor-box">
-        <span>青提</span><span>白雾红尘</span><span>西柚百香果</span><span>茉莉龙井</span><span>西瓜</span><span>水蜜桃</span><span>杨枝甘露</span><span>洛神花茶</span><span>矿泉水</span><span>蜂蜜柚子</span><span>冰爽青柠</span><span>红苹果</span><span>手打柠檬茶</span><span>紫晶葡萄</span>
-      </div>
-    </div>
+  <!-- 14 个货架由 JS 动态渲染 -->
+  <div class="shelf-grid" id="shelf-grid"></div>
 
-    <!-- 02 -->
-    <div class="model-card">
-      <div class="model-head tag-c2"><span>【BZ 板砖】</span><span>7款</span></div>
-      <div class="flavor-box">
-        <span>绿宝蜜瓜</span><span>西瓜冰</span><span>草莓口香糖</span><span>葡萄乳酸菌</span><span>蓝拉滋</span><span>可乐冰</span><span>草莓雪冰</span>
-      </div>
-    </div>
-
-    <!-- 03 -->
-    <div class="model-card">
-      <div class="model-head tag-c3"><span>【冰爆 ICX】</span><span>22款</span></div>
-      <div class="flavor-box">
-        <span>绿豆</span><span>老冰棍</span><span>青苹果</span><span>可乐</span><span>薄荷</span><span>奇异果</span><span>宝矿力</span><span>桂花乌龙</span><span>荔枝</span><span>草莓</span><span>百香果</span><span>番石榴</span><span>西瓜</span><span>茉莉奶茶</span><span>青提</span><span>桃子</span><span>柠檬</span><span>龙井</span><span>黄瓜柠檬</span><span>梅子绿茶</span><span>金柚蜂蜜</span><span>芦荟青柠</span>
-      </div>
-    </div>
-
-    <!-- 04 -->
-    <div class="model-card">
-      <div class="model-head tag-c4"><span>【RK 小火箭】</span><span>18款</span></div>
-      <div class="flavor-box">
-        <span>绿豆</span><span>泰椰子水</span><span>宝矿力</span><span>香芋</span><span>绿宝石甜瓜</span><span>海盐柠檬</span><span>草莓冰淇淋</span><span>奇异果</span><span>山楂气泡水</span><span>百香果葡萄柚</span><span>葡萄</span><span>薄荷</span><span>西瓜</span><span>蓝莓酸奶</span><span>荔枝</span><span>清爽双苹果</span><span>龙井</span><span>柠檬菠萝</span>
-      </div>
-    </div>
-
-    <!-- 05 -->
-    <div class="model-card">
-      <div class="model-head tag-c5"><span>【外星人】</span><span>14款</span></div>
-      <div class="flavor-box">
-        <span>葡萄</span><span>草莓</span><span>极寒刃</span><span>桃子</span><span>苹果</span><span>薄荷</span><span>宝矿力</span><span>柠檬橙子</span><span>铁观音</span><span>龙井</span><span>西瓜</span><span>菠萝</span><span>番石榴</span><span>荔枝</span>
-      </div>
-    </div>
-
-    <!-- 06 -->
-    <div class="model-card">
-      <div class="model-head tag-c1"><span>【Y柚 独角兽】</span><span>25款</span></div>
-      <div class="flavor-box">
-        <span>青柑茶</span><span>青提茉莉</span><span>薄荷口香糖</span><span>绿豆</span><span>快乐养乐多</span><span>冰镇西瓜</span><span>灵魂薄荷</span><span>菠萝</span><span>青提</span><span>乌龙茶</span><span>斩铁剑薄荷</span><span>荔枝冰</span><span>茉莉绿茶</span><span>柠檬茶</span><span>葡萄柚</span><span>龙井</span><span>葡萄</span><span>草莓</span><span>鲜橙子汽水</span><span>冰镇椰子汁</span><span>淘气柚子茶</span><span>红酒</span><span>番石榴</span><span>牛奶</span><span>山楂</span>
-      </div>
-    </div>
-
-    <!-- 07 -->
-    <div class="model-card">
-      <div class="model-head tag-c2"><span>【Z加 冰熊 20000】</span><span>9款</span></div>
-      <div class="flavor-box">
-        <span>西瓜冰</span><span>留兰香薄荷</span><span>草莓芒果</span><span>酸苹果</span><span>青提</span><span>椰子水</span><span>树莓西瓜</span><span>樱桃可乐</span><span>混合浆果</span>
-      </div>
-    </div>
-
-    <!-- 08 -->
-    <div class="model-card">
-      <div class="model-head tag-c3"><span>【冰熊传奇 6000】</span><span>20款</span></div>
-      <div class="flavor-box">
-        <span>三芒</span><span>青提</span><span>薄荷</span><span>冰爽青柠</span><span>海盐柠檬</span><span>凝霜茶</span><span>葡萄</span><span>百香果</span><span>西柚</span><span>绿豆</span><span>青柑甘露</span><span>老冰棍</span><span>柠檬菠萝</span><span>矿泉水</span><span>草莓奇异果</span><span>芭乐</span><span>零度可乐</span><span>荔枝冰</span><span>龙井</span><span>西瓜冰</span>
-      </div>
-    </div>
-
-    <!-- 09 -->
-    <div class="model-card">
-      <div class="model-head tag-c4"><span>【REXI ACE】</span><span>2款</span></div>
-      <div class="flavor-box">
-        <span>西瓜茉莉花茶</span><span>烘焙铁观音</span>
-      </div>
-    </div>
-
-    <!-- 10 -->
-    <div class="model-card">
-      <div class="model-head tag-c5"><span>【REXI 4000】</span><span>24款</span></div>
-      <div class="flavor-box">
-        <span>普洱茶</span><span>可乐</span><span>绿豆</span><span>芒果</span><span>极地茉莉</span><span>香芋</span><span>柠檬红茶</span><span>宝矿力</span><span>山楂</span><span>矿泉水</span><span>奇异果</span><span>葡萄</span><span>龙井</span><span>菠萝</span><span>荔枝</span><span>椰子水</span><span>薄荷</span><span>百香果</span><span>青提</span><span>西瓜</span><span>番石榴</span><span>百香果西柚</span><span>青芒</span><span>铁观音</span>
-      </div>
-    </div>
-
-    <!-- 11 -->
-    <div class="model-card">
-      <div class="model-head tag-c1"><span>【REXI板砖 20000】</span><span>17款</span></div>
-      <div class="flavor-box">
-        <span>抹茶</span><span>椰子水</span><span>西瓜</span><span>野酸味</span><span>宝矿力</span><span>龙井</span><span>葡萄</span><span>猕猴桃</span><span>铁观音</span><span>青提</span><span>菠萝</span><span>百香果</span><span>薄荷</span><span>茉莉绿茶</span><span>柠檬茶</span><span>绿豆</span><span>香蕉</span>
-      </div>
-    </div>
-
-    <!-- 12 -->
-    <div class="model-card">
-      <div class="model-head tag-c2"><span>【REXI极凉 12000】</span><span>8款</span></div>
-      <div class="flavor-box">
-        <span>西瓜茉莉</span><span>白桃</span><span>葡萄铁观音</span><span>葡萄冰</span><span>海盐柠檬</span><span>西瓜冰</span><span>极凉薄荷</span><span>铁观音</span>
-      </div>
-    </div>
-
-    <!-- 13 -->
-    <div class="model-card">
-      <div class="model-head tag-c3"><span>【松 A38】</span><span>14款</span></div>
-      <div class="flavor-box">
-        <span>柠檬可乐</span><span>龙井</span><span>奇异果</span><span>荔枝</span><span>西柚</span><span>白桃乌龙</span><span>蓝莓</span><span>青提</span><span>黑加仑</span><span>杨梅</span><span>菠萝</span><span>芭乐</span><span>青苹果</span><span>百香果</span>
-      </div>
-    </div>
-
-    <!-- 14 -->
-    <div class="model-card">
-      <div class="model-head tag-c4"><span>【松 A55】</span><span>11款</span></div>
-      <div class="flavor-box">
-        <span>菠萝</span><span>薄荷</span><span>西柚百香果</span><span>青苹果</span><span>龙井</span><span>椰子</span><span>巨峰葡萄</span><span>青提</span><span>番石榴</span><span>老冰棍</span><span>草莓</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- 底部纯粹背书 (零废话) -->
   <div class="footer">
     <div class="footer-trust">私信发高清实拍细节 📸 ｜ 圈选口味直接配 ｜ 全线现货秒发</div>
   </div>
 </div>
 
+<!-- 点选管理弹窗 -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>⚙️ 今日现货口味点选（点一下开关）</h3>
+      <button class="close-btn" onclick="closeModal()">✕ 完成关闭</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <span style="font-size: 11px; color: #666;">绿色=今日有货 ｜ 灰色带横线=今日缺货</span>
+      <button class="action-btn export-btn" style="padding: 6px 14px; font-size: 13px;" onclick="closeModal()">保存并更新海报</button>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
+// 14个系列全量内置口味库 (带上对应的颜色主题)
+const initialShelves = [
+  {
+    title: "【YZ 鸭嘴】", colorClass: "tag-c1",
+    flavors: [
+      { name: "青提", active: true }, { name: "白雾红尘", active: true }, { name: "西柚百香果", active: true },
+      { name: "茉莉龙井", active: true }, { name: "西瓜", active: true }, { name: "水蜜桃", active: true },
+      { name: "杨枝甘露", active: true }, { name: "洛神花茶", active: true }, { name: "矿泉水", active: true },
+      { name: "蜂蜜柚子", active: true }, { name: "冰爽青柠", active: true }, { name: "红苹果", active: true },
+      { name: "手打柠檬茶", active: true }, { name: "紫晶葡萄", active: true }
+    ]
+  },
+  {
+    title: "【BZ 板砖】", colorClass: "tag-c2",
+    flavors: [
+      { name: "绿宝蜜瓜", active: true }, { name: "西瓜冰", active: true }, { name: "草莓口香糖", active: true },
+      { name: "葡萄乳酸菌", active: true }, { name: "蓝拉滋", active: true }, { name: "可乐冰", active: true },
+      { name: "草莓雪冰", active: true }
+    ]
+  },
+  {
+    title: "【冰爆 ICX】", colorClass: "tag-c3",
+    flavors: [
+      { name: "绿豆", active: true }, { name: "老冰棍", active: true }, { name: "青苹果", active: true },
+      { name: "可乐", active: true }, { name: "薄荷", active: true }, { name: "奇异果", active: true },
+      { name: "宝矿力", active: true }, { name: "桂花乌龙", active: true }, { name: "荔枝", active: true },
+      { name: "草莓", active: true }, { name: "百香果", active: true }, { name: "番石榴", active: true },
+      { name: "西瓜", active: true }, { name: "茉莉奶茶", active: true }, { name: "青提", active: true },
+      { name: "桃子", active: true }, { name: "柠檬", active: true }, { name: "龙井", active: true },
+      { name: "黄瓜柠檬", active: true }, { name: "梅子绿茶", active: true }, { name: "金柚蜂蜜", active: true },
+      { name: "芦荟青柠", active: true }
+    ]
+  },
+  {
+    title: "【RK 小火箭】", colorClass: "tag-c4",
+    flavors: [
+      { name: "绿豆", active: true }, { name: "泰椰子水", active: true }, { name: "宝矿力", active: true },
+      { name: "香芋", active: true }, { name: "绿宝石甜瓜", active: true }, { name: "海盐柠檬", active: true },
+      { name: "草莓冰淇淋", active: true }, { name: "奇异果", active: true }, { name: "山楂气泡水", active: true },
+      { name: "百香果葡萄柚", active: true }, { name: "葡萄", active: true }, { name: "薄荷", active: true },
+      { name: "西瓜", active: true }, { name: "蓝莓酸奶", active: true }, { name: "荔枝", active: true },
+      { name: "清爽双苹果", active: true }, { name: "龙井", active: true }, { name: "柠檬菠萝", active: true }
+    ]
+  },
+  {
+    title: "【外星人】", colorClass: "tag-c5",
+    flavors: [
+      { name: "葡萄", active: true }, { name: "草莓", active: true }, { name: "极寒刃", active: true },
+      { name: "桃子", active: true }, { name: "苹果", active: true }, { name: "薄荷", active: true },
+      { name: "宝矿力", active: true }, { name: "柠檬橙子", active: true }, { name: "铁观音", active: true },
+      { name: "龙井", active: true }, { name: "西瓜", active: true }, { name: "菠萝", active: true },
+      { name: "番石榴", active: true }, { name: "荔枝", active: true }
+    ]
+  },
+  {
+    title: "【Y柚 独角兽】", colorClass: "tag-c1",
+    flavors: [
+      { name: "青柑茶", active: true }, { name: "青提茉莉", active: true }, { name: "薄荷口香糖", active: true },
+      { name: "绿豆", active: true }, { name: "快乐养乐多", active: true }, { name: "冰镇西瓜", active: true },
+      { name: "灵魂薄荷", active: true }, { name: "菠萝", active: true }, { name: "青提", active: true },
+      { name: "乌龙茶", active: true }, { name: "斩铁剑薄荷", active: true }, { name: "荔枝冰", active: true },
+      { name: "茉莉绿茶", active: true }, { name: "柠檬茶", active: true }, { name: "葡萄柚", active: true },
+      { name: "龙井", active: true }, { name: "葡萄", active: true }, { name: "草莓", active: true },
+      { name: "鲜橙子汽水", active: true }, { name: "冰镇椰子汁", active: true }, { name: "淘气柚子茶", active: true },
+      { name: "红酒", active: true }, { name: "番石榴", active: true }, { name: "牛奶", active: true },
+      { name: "山楂", active: true }
+    ]
+  },
+  {
+    title: "【Z加 冰熊 20000】", colorClass: "tag-c2",
+    flavors: [
+      { name: "西瓜冰", active: true }, { name: "留兰香薄荷", active: true }, { name: "草莓芒果", active: true },
+      { name: "酸苹果", active: true }, { name: "青提", active: true }, { name: "椰子水", active: true },
+      { name: "树莓西瓜", active: true }, { name: "樱桃可乐", active: true }, { name: "混合浆果", active: true }
+    ]
+  },
+  {
+    title: "【冰熊传奇 6000】", colorClass: "tag-c3",
+    flavors: [
+      { name: "三芒", active: true }, { name: "青提", active: true }, { name: "薄荷", active: true },
+      { name: "冰爽青柠", active: true }, { name: "海盐柠檬", active: true }, { name: "凝霜茶", active: true },
+      { name: "葡萄", active: true }, { name: "百香果", active: true }, { name: "西柚", active: true },
+      { name: "绿豆", active: true }, { name: "青柑甘露", active: true }, { name: "老冰棍", active: true },
+      { name: "柠檬菠萝", active: true }, { name: "矿泉水", active: true }, { name: "草莓奇异果", active: true },
+      { name: "芭乐", active: true }, { name: "零度可乐", active: true }, { name: "荔枝冰", active: true },
+      { name: "龙井", active: true }, { name: "西瓜冰", active: true }
+    ]
+  },
+  {
+    title: "【REXI ACE】", colorClass: "tag-c4",
+    flavors: [
+      { name: "西瓜茉莉花茶", active: true }, { name: "烘焙铁观音", active: true }
+    ]
+  },
+  {
+    title: "【REXI 4000】", colorClass: "tag-c5",
+    flavors: [
+      { name: "普洱茶", active: true }, { name: "可乐", active: true }, { name: "绿豆", active: true },
+      { name: "芒果", active: true }, { name: "极地茉莉", active: true }, { name: "香芋", active: true },
+      { name: "柠檬红茶", active: true }, { name: "宝矿力", active: true }, { name: "山楂", active: true },
+      { name: "矿泉水", active: true }, { name: "奇异果", active: true }, { name: "葡萄", active: true },
+      { name: "龙井", active: true }, { name: "菠萝", active: true }, { name: "荔枝", active: true },
+      { name: "椰子水", active: true }, { name: "薄荷", active: true }, { name: "百香果", active: true },
+      { name: "青提", active: true }, { name: "西瓜", active: true }, { name: "番石榴", active: true },
+      { name: "百香果西柚", active: true }, { name: "青芒", active: true }, { name: "铁观音", active: true }
+    ]
+  },
+  {
+    title: "【REXI板砖 20000】", colorClass: "tag-c1",
+    flavors: [
+      { name: "抹茶", active: true }, { name: "椰子水", active: true }, { name: "西瓜", active: true },
+      { name: "野酸味", active: true }, { name: "宝矿力", active: true }, { name: "龙井", active: true },
+      { name: "葡萄", active: true }, { name: "猕猴桃", active: true }, { name: "铁观音", active: true },
+      { name: "青提", active: true }, { name: "菠萝", active: true }, { name: "百香果", active: true },
+      { name: "薄荷", active: true }, { name: "茉莉绿茶", active: true }, { name: "柠檬茶", active: true },
+      { name: "绿豆", active: true }, { name: "香蕉", active: true }
+    ]
+  },
+  {
+    title: "【REXI极凉 12000】", colorClass: "tag-c2",
+    flavors: [
+      { name: "西瓜茉莉", active: true }, { name: "白桃", active: true }, { name: "葡萄铁观音", active: true },
+      { name: "葡萄冰", active: true }, { name: "海盐柠檬", active: true }, { name: "西瓜冰", active: true },
+      { name: "极凉薄荷", active: true }, { name: "铁观音", active: true }
+    ]
+  },
+  {
+    title: "【松 A38】", colorClass: "tag-c3",
+    flavors: [
+      { name: "柠檬可乐", active: true }, { name: "龙井", active: true }, { name: "奇异果", active: true },
+      { name: "荔枝", active: true }, { name: "西柚", active: true }, { name: "白桃乌龙", active: true },
+      { name: "蓝莓", active: true }, { name: "青提", active: true }, { name: "黑加仑", active: true },
+      { name: "杨梅", active: true }, { name: "菠萝", active: true }, { name: "芭乐", active: true },
+      { name: "青苹果", active: true }, { name: "百香果", active: true }
+    ]
+  },
+  {
+    title: "【松 A55】", colorClass: "tag-c4",
+    flavors: [
+      { name: "菠萝", active: true }, { name: "薄荷", active: true }, { name: "西柚百香果", active: true },
+      { name: "青苹果", active: true }, { name: "龙井", active: true }, { name: "椰子", active: true },
+      { name: "巨峰葡萄", active: true }, { name: "青提", active: true }, { name: "番石榴", active: true },
+      { name: "老冰棍", active: true }, { name: "草莓", active: true }
+    ]
+  }
+];
+
+// 本地记忆加载
+let shelves = JSON.parse(localStorage.getItem('my_shelf_data')) || initialShelves;
+
+function saveState() {
+  localStorage.setItem('my_shelf_data', JSON.stringify(shelves));
+}
+
+// 渲染海报画布上的货架
+function renderPoster() {
+  const grid = document.getElementById('shelf-grid');
+  grid.innerHTML = '';
+
+  shelves.forEach((s) => {
+    // 找出当前激活（有货）的口味
+    const activeFlavors = s.flavors.filter(f => f.active);
+
+    const card = document.createElement('div');
+    card.className = 'model-card';
+
+    const spansHtml = activeFlavors.length > 0 
+      ? activeFlavors.map(f => `<span>${f.name}</span>`).join('')
+      : `<span style="color:#999;font-style:italic;">今日暂无现货</span>`;
+
+    card.innerHTML = `
+      <div class="model-head ${s.colorClass}">
+        <span>${s.title}</span>
+        <span>${activeFlavors.length}款</span>
+      </div>
+      <div class="flavor-box">
+        ${spansHtml}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// 渲染管理后台弹窗里的点选药丸
+function renderModal() {
+  const body = document.getElementById('modalBody');
+  body.innerHTML = '';
+
+  shelves.forEach((s, sIdx) => {
+    const group = document.createElement('div');
+    group.className = 'manage-group';
+
+    const chipsHtml = s.flavors.map((f, fIdx) => `
+      <span class="chip ${f.active ? 'active' : 'inactive'}" onclick="toggleFlavor(${sIdx}, ${fIdx})">
+        ${f.name}
+      </span>
+    `).join('');
+
+    group.innerHTML = `
+      <div class="manage-group-head">
+        <span>${s.title}</span>
+        <div>
+          <button style="font-size:11px;padding:2px 6px;cursor:pointer;" onclick="setAll(${sIdx}, true)">全选</button>
+          <button style="font-size:11px;padding:2px 6px;cursor:pointer;" onclick="setAll(${sIdx}, false)">全清</button>
+        </div>
+      </div>
+      <div class="chip-container">
+        ${chipsHtml}
+      </div>
+      <div class="add-flavor-row">
+        <input type="text" class="add-flavor-input" id="new-flavor-${sIdx}" placeholder="输入新出的突发口味..." onkeydown="if(event.key==='Enter') addNewFlavor(${sIdx})">
+        <button class="add-flavor-btn" onclick="addNewFlavor(${sIdx})">➕ 添加</button>
+      </div>
+    `;
+    body.appendChild(group);
+  });
+}
+
+// 切换某口味状态
+function toggleFlavor(sIdx, fIdx) {
+  shelves[sIdx].flavors[fIdx].active = !shelves[sIdx].flavors[fIdx].active;
+  saveState();
+  renderModal();
+  renderPoster();
+}
+
+// 批量全选或全清
+function setAll(sIdx, status) {
+  shelves[sIdx].flavors.forEach(f => f.active = status);
+  saveState();
+  renderModal();
+  renderPoster();
+}
+
+// 临时添加全新口味到库中
+function addNewFlavor(sIdx) {
+  const input = document.getElementById(`new-flavor-${sIdx}`);
+  const val = input.value.trim();
+  if (!val) return;
+  shelves[sIdx].flavors.push({ name: val, active: true });
+  input.value = '';
+  saveState();
+  renderModal();
+  renderPoster();
+}
+
+// 弹窗开关
+function openModal() {
+  renderModal();
+  document.getElementById('modalOverlay').classList.add('active');
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+
+// 保存海报
 function takeSnapshot() {
   const el = document.getElementById('poster-canvas');
   html2canvas(el, { scale: 3, useCORS: true }).then(canvas => {
@@ -311,6 +607,9 @@ function takeSnapshot() {
     link.click();
   });
 }
+
+// 页面启动首次渲染
+renderPoster();
 </script>
 </body>
 </html>
