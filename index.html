@@ -376,11 +376,11 @@ const defaultData = [
   { title: "【松 A55】", flavors: ["菠萝", "薄荷", "西柚百香果", "青苹果", "龙井", "椰子", "巨峰葡萄", "青提", "番石榴", "老冰棍", "草莓"] }
 ];
 
-// 读取本地存储
-let currentData = JSON.parse(localStorage.getItem('my_shelf_menu_data')) || defaultData;
+// 每次打开/刷新页面，都直接深拷贝初始默认数据，绝不写入手机本地
+let currentData = JSON.parse(JSON.stringify(defaultData));
 
 function saveData() {
-  localStorage.setItem('my_shelf_menu_data', JSON.stringify(currentData));
+  // 不做任何持久化存储，改动仅在当前页面内存中生效
 }
 
 // 渲染海报画布
